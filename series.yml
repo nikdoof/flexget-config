@@ -1,0 +1,279 @@
+series:
+  settings:
+    hd:
+      propers: 48 hours
+      identified_by: ep
+      target: 720p+ hdtv+
+      quality: 720p+ 
+      timeframe: 1 hours
+    sd:
+      propers: 48 hours
+      identified_by: ep
+  hd:
+    - Adventure Time:
+        alternate_name: "Adventure Time with Jake and Finn"
+        begin: S06E36
+        set:
+          tvdb_id: 152831
+    - "American Dad!":
+        begin: S13E01
+        set:
+          tvdb_id: 73141
+    - Bad Education:
+        begin: S04E01
+        set:
+          tvdb_id: 261277
+    - Better Call Saul:
+        begin: S02E01
+        set:
+          tvdb_id: 273181
+    - Benefits Street:
+        begin: S02E04
+    - "Bob's Burgers":
+        begin: S05E19
+        set:
+          tvdb_id: 194031
+    - Bones:
+        begin: S10E19
+        set:
+          tvdb_id: 75682
+    - Borgen:
+        begin: S04E01
+        set:
+          tvdb_id: 193261
+    - Bosch:
+        begin: S02E01
+        set:
+          tvdb_id: 277928
+    - "Catfist: The TV Show":
+        begin: S04E11
+        set:
+          tvdb_id: 262754
+    - "Click (2000)":
+        alternate_name: Click
+        identified_by: date
+        set:
+          tvdb_id: 84312
+    - Criminal Minds:
+        begin: S11E01
+        exact: yes
+        set:
+          tvdb_id: 75710
+    - "Criminal Minds: Beyond Borders":
+        begin: S01E01
+        exact: yes
+        set:
+          tvdb_id: 296654
+    - DIG:
+        begin: S02E01
+        set:
+          tvdb_id: 275278
+    - "Doctor Who (2005)":
+        alternate_name: Doctor Who
+        begin: S10E01
+        set:
+          tvdb_id: 78804
+    - "Dragon's Den":
+        begin: S13E02
+        exact: yes
+        set:
+          tvdb_id: 79836
+    - Fortitude:
+        begin: S02E01
+        set:
+          tvdb_id: 281976
+    - Futurama:
+        begin: S08E01
+    - Gogglebox:
+        begin: S05E13
+        exact: yes
+        set:
+          tvdb_id: 268009
+    - Have I Got News For You:
+        begin: S49E07
+        set:
+          tvdb_id: 74281
+    - Heroes Reborn:
+        begin: S01E01
+        set:
+          tvdb_id: 279201
+    - Homeland:
+        exact: yes
+        begin: S05E01
+        set:
+          tvdb_id: 247897
+    - Ice Road Truckers:
+        begin: S09E01
+        set:
+          tvdb_id: 80273
+    - Luther:
+        exact: yes
+        begin: S04E01
+        set:
+          tvdb_id: 159591
+    - "Marvel's Agents of S.H.I.E.L.D.":
+        begin: S03E01
+        set:
+          tvdb_id: 263365
+    - "Masterchef (2005)":
+        exact: yes
+        begin: S12E01
+    - Modern Family:
+        begin: S07E01
+        set:
+          tvdb_id: 95011
+    - Mr Robot:
+        begin: S01E01
+        set:
+          tvdb_id: 289590
+    - "My Little Pony: Friendship Is Magic":
+        begin: S05E06
+        set:
+          tvdb_id: 212171
+    - Mythbusters:
+        begin: S15E07
+        set:
+          tvdb_id: 73388
+    - Never Mind The Buzzcocks:
+        begin: S28E14
+        set:
+          tvdb_id: 78051
+    - New Girl:
+        begin: S05E01
+        set:
+          tvdb_id: 248682
+    - Newswipe:
+        alternate_name: Newswipe with Charlie Brooker
+        begin: S03E01
+        set:
+          tvdb_id: 86451
+    - Only Connect:
+        begin: S11E01
+        set:
+          tvdb_id: 83221
+    - Project Runway:
+        exact: yes
+        begin: S14E01
+        set:
+          tvdb_id: 74285
+    - Project Runway All Stars:
+        exact: yes
+        begin: S05E01
+        set:
+          tvdb_id: 253682
+    - Project Runway Australia:
+        exact: yes
+        begin: S05E01
+        set:
+          tvdb_id: 82448
+    - Project Runway Under the Gunn:
+        alternate_name: Under the Gunn
+        exact: yes
+        begin: S02E01
+        set:
+          tvdb_id: 278038
+    - Regular Show:
+        begin: S07E01
+        set:
+          tvdb_id: 188401
+    - Rick And Morty:
+        begin: S02E01
+        set:
+          tvdb_id: 275274
+    - Robot Chicken:
+        begin: S08E01
+        set:
+          tvdb_id: 75734
+    - "Russell Howard's Good News":
+        exact: yes
+        begin: S10E01
+        set:
+          tvdb_id: 120541
+    - "RuPaul's Drag Race":
+        exact: yes
+        begin: S08E01
+        set:
+          tvdb_id: 85002
+    - Selfie:
+        begin: S02E01
+        set:
+          tvdb_id: 279529
+    - Sherlock:
+        begin: S04E01
+        set:
+          tvdb_id: 176941
+    - Suits:
+        begin: S05E01
+        set:
+          tvdb_id: 247808
+    - Supernatural:
+        begin: S10E22
+        set:
+          tvdb_id: 78901
+    - The Amazing Race:
+        begin: S26E12
+        exact: yes
+        set:
+          tvdb_id: 77666
+    - The Americans:
+        begin: S03E14
+        set:
+          tvdb_id: 261690
+    - The Biggest Loser:
+        begin: S17E01
+        set:
+          tvdb_id: 75166
+    - The Blacklist:
+        begin: S02E22
+        set:
+          tvdb_id: 266189
+    - Bron:
+        begin: S04E01
+        set:
+          tvdb_id: 252019
+    - The Following:
+        begin: S03E12
+    - The Great British Bake Off:
+        begin: S06E01
+        exact: yes
+        set:
+          tvdb_id: 184871
+    - The Killing:
+        begin: S04E01
+        exact: yes
+        set:
+          tvdb_id: 79689
+    - The Last Leg:
+        alternate_name: The Last Leg With Adam Mills
+        begin: S06E03
+        set:
+          tvdb_id: 266449
+    - "The Librarians (2014)":
+        begin: S02E01
+    - The Middle:
+        begin: S06E24
+    - The Sheriffs Are Coming:
+        begin: S04E06
+        set:
+          tvdb_id: 257697
+    - True Detective:
+        begin: S02E05
+        set:
+          tvdb_id: 270633
+    - Witnesses:
+        begin: S02E01
+        set:
+          tvdb_id: 288541
+  sd:
+    - Dance Moms:
+        begin: S05E19
+        set:
+          tvdb_id: 250379
+    - Neighbours:
+        identified_by: id
+        name_regexp:
+          - Neighbours
+        id_regexp: 
+          - (\d{4}) \d{1,2} [a-zA-Z]{1,15} \d{4}
+        set:
+          tvdb_id: 76719

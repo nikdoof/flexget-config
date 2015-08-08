@@ -1,0 +1,299 @@
+secrets: secrets.yml
+tasks:
+  tv-private:
+    priority: 2
+    template:
+      - tv
+      - notify
+      - deluge_local
+    interval: 15 minutes
+    inputs:
+      - rss: '{{ secrets.feed_urls.tv.btn }}'
+      - rss: '{{ secrets.feed_urls.tv.tvchaos }}'
+      - rss: '{{ secrets.feed_urls.tv.baconbits }}'
+    manipulate:
+      - description:
+          remove: yes
+
+  tv-private-tasmanites:
+    priority: 2
+    template:
+      - tv
+      - notify
+      - deluge_local
+    interval: 15 minutes
+    inputs:
+      - rss: '{{ secrets.feed_urls.tv.tasmanites }}'
+    manipulate:
+      - description:
+          remove: yes
+    assume_quality: 480p sdtv
+
+  tv-public:
+    manual: yes
+    priority: 3
+    template:
+      - tv
+      - notify
+      - deluge_local
+    inputs:
+      - rss: https://torrentz.in/feed_verified?q=tv
+      - rss: http://showrss.info/feeds/all.rss
+      - rss: http://rss.bt-chat.com/?group=3
+      - rss: http://rss.thepiratebay.se/205
+      - rss: http://rss.thepiratebay.se/208
+    manipulate:
+      - description:
+          remove: yes
+    set:
+      ratio: 0.01
+      label: tv-public
+
+  tv-archive:
+    interval: 4 hours
+    manual: yes
+    template:
+      - tv
+      - notify
+      - deluge_local
+    discover:
+      what:
+        - emit_series: yes
+      from:
+        - flexget_archive: [tv]
+
+####
+
+  sport-nfl-private:
+    priority: 3
+    template:
+      - deluge_local
+    interval: 15 minutes
+    inputs:
+      - rss: '{{ secrets.feed_urls.sports.btn }}'
+    regexp:
+      accept:
+        - 'NFL - .* - Super Bowl .*'
+        - 'NFL - .* Seahawks .*'
+      from: title
+    quality: 720p+ hdtv+
+    set:
+      label: sport
+
+  sport-motorsports-private:
+    priority: 3
+    template:
+      - deluge_local
+    interval: 15 minutes
+    headers:
+      Cookie: '{{ secrets.cookies.racingforme }}' 
+    inputs:
+      - rss: '{{ secrets.feed_urls.sports.racingforme }}'
+    regexp:
+      accept:
+        - ^Formula1\.2015\..*\.(Post.?Race|Race|Quali|Qualifying|FP1|FP2|FP3).*\.Sky(Sports?)?(HD)?F1(HD)?.*\.720p.*\.English.*RFM$
+        - ^Formula1\.2015\..*Test.*\.Sky(Sports?)?F1HD.*\.720p.*\.English.*RFM$
+      reject:
+        - hannibal
+        - Highlights
+        - w4f
+        - fairplay
+        - SMC
+      from: title
+    set:
+      label: sport
+
+###
+
+  movies-private:
+    priority: 2
+    template:
+      - movies
+      - notify
+      - deluge_local
+    interval: 1 hours
+    inputs:
+      - rss: '{{ secrets.feed_urls.movies.baconbits }}'
+      - rss: '{{ secrets.feed_urls.movies.cinemageddon }}'
+
+  movies-private-awesomehd:
+    priority: 3
+    template: 
+      - movies
+      - notify
+      - deluge_local
+    interval: 1 hours
+    inputs:
+      - rss: '{{ secrets.feed_urls.movies.awesomehd }}'
+    manipulate:
+      - title: 
+          extract: 'MOVIE\: (.*)'
+          replace:
+            regexp: '/'
+            format: '-'
+
+  movies-private-awesomehd-seedbox:
+    priority: 1
+    template:
+      - deluge_seedbox
+    interval: 5 minutes
+    inputs:
+      - rss: '{{ secrets.feed_urls.movies.awesomehd }}'
+    manipulate:
+      - title:
+          extract: 'MOVIE\: (.*)'
+          replace:
+            regexp: '/'
+            format: '-'
+    regexp:
+      accept:
+        - '75% Freeleech'
+    seen: local
+
+  movies-public:
+    manual: yes
+    priority: 4
+    template:
+      - movies
+      - notify
+      - deluge_local
+    interval: 4 hours
+    discover:
+      what:
+        - emit_movie_queue: yes
+      from:
+        - torrentz: verified
+        - piratebay:
+            category: 207
+            sort_by: seeds
+
+  movies-archive:
+    interval: 1 hours
+    template:
+      - movies
+      - notify
+      - deluge_local
+    discover:
+      what:
+        - emit_movie_queue: yes
+      from:
+        - flexget_archive: [torrent, movies]
+
+#####
+
+  movies-seed_queue:
+    priority: 1
+    template:
+      - no_global
+    seen: local
+    interval: 1 hours
+    inputs:
+      - imdb_list:
+          user_id: '{{ secrets.services.imdb.user1 }}'
+          list: watchlist
+      - imdb_list:
+          user_id: '{{ secrets.services.imdb.user2 }}'
+          list: watchlist
+    accept_all: yes
+    movie_queue: 
+      action: add
+      quality: 720p+ bluray
+    parsing:
+      movie: guessit
+
+  movies-populate-downloads:
+    manual: yes
+    disable: 
+      - seen
+      - seen_info_hash
+      - seen_movies
+    listdir:
+      - /srv/media/Movies
+      - /srv/movie_archive/
+    template: no_global
+    movie_queue: accept
+    make_rss: ~/movies.rss
+    assume_quality: 1080p bluray
+
+#####
+
+templates:
+  global:
+    content_filter:
+      reject:
+        - password.txt
+        - '*.rar'
+        - '*.zip'
+      require:
+        - '*.avi'
+        - '*.mkv'
+        - '*.mp4'
+    cookies: /home/torrent/.flexget/cookies.txt
+    pathscrub: windows
+    magnets: no
+    plugin_priority:
+      piratebay: 140
+    retry_failed: true
+  notify:
+    pushbullet:
+      apikey:
+        - '{{ secrets.services.pushbullet.user1 }}'
+        - '{{ secrets.services.pushbullet.user1 }}'
+      title: >
+        {% if series_name is defined %}{{ tvdb_series_name|d(series_name) }} - {{ series_id }}
+        {% elif imdb_name is defined %}{{ imdb_name }} ({{ imdb_year }})
+        {% else %}{{ title }}
+        {% endif %}
+      body: >
+        {% if series_name is defined %}{{ tvdb_series_name|d(series_name) }} - {{ series_id }} - {{ tvdb_ep_name|d('') }}{% if quality is defined %} ({{ quality }}){% endif %}
+        {% elif imdb_name is defined %}{{ imdb_name }} ({{ imdb_year }}){% if quality is defined %} ({{ quality }}){% endif %}
+        {% else %}{{ title }}{% if quality is defined %} ({{ quality }}){% endif %}
+        {% endif %}
+  deluge_local:
+    deluge:
+      main_file_only: true
+      ratio: 2.0
+      removeatratio: true
+      path: /home/torrent/downloads/
+      movedone: /home/torrent/downloads/complete/
+    free_space:
+      path: /home/torrent/downloads/
+      space: 1024
+  deluge_seedbox:
+    deluge:
+      host: '{{ secrets.hosts.seedbox.hostname }}'
+      username: '{{ secrets.hosts.seedbox.deluge_login }}'
+      password: '{{ secrets.hosts.seedbox.deluge_password }}'
+  tv:
+    include: series.yml
+    regexp:
+      reject:
+        - xAll
+        - HDRip
+    content_size:
+      min: 50
+      max: 2500
+      strict: no
+    thetvdb_lookup: yes
+    set:
+      content_filename: "{{ tvdb_series_name|default(series_name) }} - {{ tvdb_ep_id|default(series_id) }}{% if tvdb_ep_name|default(false) %} - {{ tvdb_ep_name|replace('/', '-')|replace(':', ' - ') }}{% endif %}"
+      label: tv
+      movedone: /srv/media/TV/{{ tvdb_series_name|default(series_name) }}/Season {{ tvdb_season|default(series_season) }}
+    archive:
+      - torrent
+      - tv
+  movies:
+    seen_movies: strict
+    proper_movies: yes
+    movie_queue: accept
+    set:
+      content_filename: '{{ imdb_name | pathscrub }} ({{ imdb_year }})'
+      label: movies
+      movedone: /srv/movie_archive/{{ imdb_name }} ({{ imdb_year}})
+    regexp:
+      reject:
+        - 3d
+        - extras
+    archive:
+      - torrent
+      - movies

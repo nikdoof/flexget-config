@@ -1,0 +1,6 @@
+secrets.yml
+*.log
+cookies.txt
+*.sqlite
+converted/
+received/

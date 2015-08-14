@@ -4,7 +4,7 @@ series:
       propers: 48 hours
       identified_by: ep
       target: 720p+ hdtv+
-      quality: 720p+ 
+      quality: 720p+ webrip+
       timeframe: 1 hours
     sd:
       propers: 48 hours
@@ -93,6 +93,10 @@ series:
         begin: S49E07
         set:
           tvdb_id: 74281
+    - Hard Knocks:
+        begin: S10E01
+        set:
+          tvdb_id: 82402
     - Heroes Reborn:
         begin: S01E01
         set:
@@ -238,6 +242,9 @@ series:
         exact: yes
         set:
           tvdb_id: 184871
+    - The Sky At Night:
+        set:
+          tvdb_id: 80428
     - The Killing:
         begin: S04E01
         exact: yes

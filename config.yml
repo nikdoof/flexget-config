@@ -75,10 +75,17 @@ tasks:
       accept:
         - 'NFL - .* - Super Bowl .*'
         - 'NFL - .* Seahawks .*'
+        - 'NFL - .* Championship .*'
+      reject:
+        - Halftime
+        - Commerials
+        - Condensed
+        - Foreign
       from: title
-    quality: 720p+ hdtv+
+    quality: 720p+ webrip+
     set:
       label: sport
+      movedone: '/srv/media/Sport/NFL/'
 
   sport-motorsports-private:
     priority: 3
@@ -87,6 +94,7 @@ tasks:
     interval: 15 minutes
     headers:
       Cookie: '{{ secrets.cookies.racingforme }}' 
+    verify_ssl_certificates: no
     inputs:
       - rss: '{{ secrets.feed_urls.sports.racingforme }}'
     regexp:
@@ -102,6 +110,7 @@ tasks:
       from: title
     set:
       label: sport
+      movedone: '/srv/media/Sport/Motorsports/Formula 1/'
 
 ###
 
@@ -272,7 +281,7 @@ templates:
         - HDRip
     content_size:
       min: 50
-      max: 2500
+      max: 3000
       strict: no
     thetvdb_lookup: yes
     set:

@@ -296,7 +296,7 @@ templates:
     proper_movies: yes
     movie_queue: accept
     set:
-      content_filename: '{{ imdb_name | pathscrub }} ({{ imdb_year }})'
+      content_filename: '{{ imdb_name | pathscrub }} ({{ imdb_year }}){% if quality %} - {{ quality }}{% endif %}'
       label: movies
       movedone: /srv/movie_archive/{{ imdb_name }} ({{ imdb_year}})
     regexp:

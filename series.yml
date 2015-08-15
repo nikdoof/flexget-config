@@ -64,6 +64,10 @@ series:
         exact: yes
         set:
           tvdb_id: 296654
+    - Con Man:
+        begin: S01E01
+        set:
+          tvdb_id: 298156
     - DIG:
         begin: S02E01
         set:
@@ -255,6 +259,9 @@ series:
         begin: S06E03
         set:
           tvdb_id: 266449
+    - The Late Late Show with James Corden:
+        set:
+          tvdb_id: 292421
     - "The Librarians (2014)":
         begin: S02E01
     - The Middle:
@@ -267,6 +274,9 @@ series:
         begin: S02E05
         set:
           tvdb_id: 270633
+    - We Bare Bears:
+        set:
+          tvdb_id: 297271
     - Witnesses:
         begin: S02E01
         set:

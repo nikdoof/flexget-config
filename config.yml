@@ -247,7 +247,7 @@ templates:
     pushbullet:
       apikey:
         - '{{ secrets.services.pushbullet.user1 }}'
-        - '{{ secrets.services.pushbullet.user1 }}'
+        - '{{ secrets.services.pushbullet.user2 }}'
       title: >
         {% if series_name is defined %}{{ tvdb_series_name|d(series_name) }} - {{ series_id }}
         {% elif imdb_name is defined %}{{ imdb_name }} ({{ imdb_year }})
@@ -285,7 +285,7 @@ templates:
       strict: no
     thetvdb_lookup: yes
     set:
-      content_filename: "{{ tvdb_series_name|default(series_name) }} - {{ tvdb_ep_id|default(series_id) }}{% if tvdb_ep_name|default(false) %} - {{ tvdb_ep_name|replace('/', '-')|replace(':', ' - ') }}{% endif %}"
+      content_filename: "{{ tvdb_series_name|default(series_name) }} - {{ tvdb_ep_id|default(series_id) }}{% if tvdb_ep_name|default(false) %} - {{ tvdb_ep_name|replace('/', '-')|replace(':', ' - ') }}{% endif %}{% if proper_count %} - Proper{% if proper_count > 1 %}{{ proper_count }}{% endif %}{% endif %}"
       label: tv
       movedone: /srv/media/TV/{{ tvdb_series_name|default(series_name) }}/Season {{ tvdb_season|default(series_season) }}
     archive:

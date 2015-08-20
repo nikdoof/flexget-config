@@ -10,6 +10,9 @@ series:
       propers: 48 hours
       identified_by: ep
   hd:
+    - "24 Hours in Police Custody":
+        set:
+          tvdb_id: 286362
     - Adventure Time:
         alternate_name: "Adventure Time with Jake and Finn"
         begin: S06E36
@@ -19,6 +22,10 @@ series:
         begin: S13E01
         set:
           tvdb_id: 73141
+    - American Horror Story:
+        begin: S05E01
+        set:
+          tvdb_id: 250487
     - Bad Education:
         begin: S04E01
         set:
@@ -78,6 +85,9 @@ series:
         set:
           tvdb_id: 78804
     - "Dragon's Den":
+        alternate_name:
+          - Dragons Den
+          - Dragons Den UK
         begin: S13E02
         exact: yes
         set:
@@ -260,6 +270,7 @@ series:
         set:
           tvdb_id: 266449
     - The Late Late Show with James Corden:
+        identified_by: date
         set:
           tvdb_id: 292421
     - "The Librarians (2014)":
@@ -274,6 +285,9 @@ series:
         begin: S02E05
         set:
           tvdb_id: 270633
+    - University Challenge:
+        set:
+          tvdb_id: 72746
     - We Bare Bears:
         set:
           tvdb_id: 297271
@@ -281,6 +295,10 @@ series:
         begin: S02E01
         set:
           tvdb_id: 288541
+    - The X Files:
+        begin: S10E01
+        set:
+          tvdb_id: 77398
   sd:
     - Dance Moms:
         begin: S05E19

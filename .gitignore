@@ -1,6 +1,7 @@
 secrets.yml
-*.log
+*.log*
 cookies.txt
-*.sqlite
+*.sqlite*
 converted/
 received/
+.config-lock

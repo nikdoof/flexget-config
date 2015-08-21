@@ -269,10 +269,6 @@ series:
         begin: S06E03
         set:
           tvdb_id: 266449
-    - The Late Late Show with James Corden:
-        identified_by: date
-        set:
-          tvdb_id: 292421
     - "The Librarians (2014)":
         begin: S02E01
     - The Middle:

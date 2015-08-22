@@ -9,6 +9,7 @@ series:
     sd:
       propers: 48 hours
       identified_by: ep
+      quality: dsr+
   hd:
     - "24 Hours in Police Custody":
         set:
@@ -264,11 +265,6 @@ series:
         exact: yes
         set:
           tvdb_id: 79689
-    - The Last Leg:
-        alternate_name: The Last Leg With Adam Mills
-        begin: S06E03
-        set:
-          tvdb_id: 266449
     - "The Librarians (2014)":
         begin: S02E01
     - The Middle:
@@ -308,3 +304,7 @@ series:
           - (\d{4}) \d{1,2} [a-zA-Z]{1,15} \d{4}
         set:
           tvdb_id: 76719
+    - The Last Leg:
+        begin: S06E03
+        set:
+          tvdb_id: 266449

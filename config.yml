@@ -1,5 +1,6 @@
 secrets: secrets.yml
 tasks:
+  # Basic TV task
   tv-private:
     priority: 2
     template:
@@ -14,7 +15,12 @@ tasks:
     manipulate:
       - description:
           remove: yes
+      - title:
+          replace:
+            regexp: '\(\d{1,2} (Jan(?:uary)?|Feb(?:uary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sept(?:ember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?) \d{4}\)'
+            format: ''
 
+  # Tasmanites needs special handling
   tv-private-tasmanites:
     priority: 2
     template:
@@ -29,26 +35,22 @@ tasks:
           remove: yes
     assume_quality: 480p sdtv
 
-  tv-public:
-    manual: yes
-    priority: 3
+  # Add TV shows from the dropbox
+  tv-dropbox:
+    priority: 2
     template:
       - tv
       - notify
       - deluge_local
+    interval: 5 minutes
     inputs:
-      - rss: https://torrentz.in/feed_verified?q=tv
-      - rss: http://showrss.info/feeds/all.rss
-      - rss: http://rss.bt-chat.com/?group=3
-      - rss: http://rss.thepiratebay.se/205
-      - rss: http://rss.thepiratebay.se/208
-    manipulate:
-      - description:
-          remove: yes
-    set:
-      ratio: 0.01
-      label: tv-public
+      - find:
+          path:
+            - /home/torrent/drop/tv/
+          recursive: yes
+          mask: '*.torrent'
 
+  # Search the archive for missed shows
   tv-archive:
     interval: 4 hours
     manual: yes
@@ -64,6 +66,7 @@ tasks:
 
 ####
 
+  # Search for NFL on BTN
   sport-nfl-private:
     priority: 3
     template:
@@ -87,6 +90,7 @@ tasks:
       label: sport
       movedone: '/srv/media/Sport/NFL/'
 
+  # Search for Motorsports on RFM
   sport-motorsports-private:
     priority: 3
     template:
@@ -249,12 +253,12 @@ templates:
         - '{{ secrets.services.pushbullet.user1 }}'
         - '{{ secrets.services.pushbullet.user2 }}'
       title: >
-        {% if series_name is defined %}{{ tvdb_series_name|d(series_name) }} - {{ series_id }}
+        {% if series_name is defined %}{{ tvdb_series_name|default(series_name, True) }} - {{ tvdb_ep_id|default(series_id, True) }}
         {% elif imdb_name is defined %}{{ imdb_name }} ({{ imdb_year }})
         {% else %}{{ title }}
         {% endif %}
       body: >
-        {% if series_name is defined %}{{ tvdb_series_name|d(series_name) }} - {{ series_id }} - {{ tvdb_ep_name|d('') }}{% if quality is defined %} ({{ quality }}){% endif %}
+        {% if series_name is defined %}{{ tvdb_series_name|default(series_name, True) }} - {{ tvdb_ep_id|default(series_id, True) }}{% if tvdb_ep_name|default(False, True) %} - {{ tvdb_ep_name|replace('/', '-')|replace(':', ' - ') }}{% endif %}{% if quality is defined %} ({{ quality }}){% endif %}
         {% elif imdb_name is defined %}{{ imdb_name }} ({{ imdb_year }}){% if quality is defined %} ({{ quality }}){% endif %}
         {% else %}{{ title }}{% if quality is defined %} ({{ quality }}){% endif %}
         {% endif %}
@@ -285,9 +289,9 @@ templates:
       strict: no
     thetvdb_lookup: yes
     set:
-      content_filename: "{{ tvdb_series_name|default(series_name) }} - {{ tvdb_ep_id|default(series_id) }}{% if tvdb_ep_name|default(false) %} - {{ tvdb_ep_name|replace('/', '-')|replace(':', ' - ') }}{% endif %}{% if proper_count %} - Proper{% if proper_count > 1 %}{{ proper_count }}{% endif %}{% endif %}"
+      content_filename: "{{ tvdb_series_name|default(series_name, True) }} - {{ tvdb_ep_id|default(series_id, True) }}{% if tvdb_ep_name|default(False, True) %} - {{ tvdb_ep_name|replace('/', '-')|replace(':', ' - ') }}{% endif %}{% if proper_count %} - Proper{% if proper_count > 1 %}{{ proper_count }}{% endif %}{% endif %}"
       label: tv
-      movedone: /srv/media/TV/{{ tvdb_series_name|default(series_name) }}/Season {{ tvdb_season|default(series_season) }}
+      movedone: /srv/media/TV/{{ tvdb_series_name|default(series_name, True) }}/Season {{ tvdb_season|default(series_season, True) }}
     archive:
       - torrent
       - tv

@@ -37,6 +37,7 @@ tasks:
 
   # Add TV shows from the dropbox
   tv-dropbox:
+    manual: yes
     priority: 2
     template:
       - tv
@@ -44,11 +45,12 @@ tasks:
       - deluge_local
     interval: 5 minutes
     inputs:
-      - find:
+      - filesystem:
           path:
             - /home/torrent/drop/tv/
           recursive: yes
           mask: '*.torrent'
+    assume_quality: 576p sdtv
 
   # Search the archive for missed shows
   tv-archive:
@@ -69,16 +71,18 @@ tasks:
   # Search for NFL on BTN
   sport-nfl-private:
     priority: 3
+    manual: yes
     template:
       - deluge_local
+      - notify
     interval: 15 minutes
     inputs:
       - rss: '{{ secrets.feed_urls.sports.btn }}'
     regexp:
       accept:
         - 'NFL - .* - Super Bowl .*'
-        - 'NFL - .* Seahawks .*'
         - 'NFL - .* Championship .*'
+        - 'NFL - .* Texans .*'
       reject:
         - Halftime
         - Commerials
@@ -89,32 +93,6 @@ tasks:
     set:
       label: sport
       movedone: '/srv/media/Sport/NFL/'
-
-  # Search for Motorsports on RFM
-  sport-motorsports-private:
-    priority: 3
-    template:
-      - deluge_local
-    interval: 15 minutes
-    headers:
-      Cookie: '{{ secrets.cookies.racingforme }}' 
-    verify_ssl_certificates: no
-    inputs:
-      - rss: '{{ secrets.feed_urls.sports.racingforme }}'
-    regexp:
-      accept:
-        - ^Formula1\.2015\..*\.(Post.?Race|Race|Quali|Qualifying|FP1|FP2|FP3).*\.Sky(Sports?)?(HD)?F1(HD)?.*\.720p.*\.English.*RFM$
-        - ^Formula1\.2015\..*Test.*\.Sky(Sports?)?F1HD.*\.720p.*\.English.*RFM$
-      reject:
-        - hannibal
-        - Highlights
-        - w4f
-        - fairplay
-        - SMC
-      from: title
-    set:
-      label: sport
-      movedone: '/srv/media/Sport/Motorsports/Formula 1/'
 
 ###
 
@@ -146,6 +124,7 @@ tasks:
             format: '-'
 
   movies-private-awesomehd-seedbox:
+    manual: yes
     priority: 1
     template:
       - deluge_seedbox
@@ -220,13 +199,29 @@ tasks:
       - seen
       - seen_info_hash
       - seen_movies
-    listdir:
+    filesystem:
       - /srv/media/Movies
       - /srv/movie_archive/
     template: no_global
     movie_queue: accept
     make_rss: ~/movies.rss
     assume_quality: 1080p bluray
+
+#####
+# Magazines
+
+  magazine-private:
+    manual: yes
+    template:
+      - magazine
+      - notify
+      - deluge_local
+    interval: 15 minutes
+    inputs:
+      - rss: '{{ secrets.feed_urls.magazines.baconbits }}'
+    manipulate:
+      - description:
+          remove: yes
 
 #####
 
@@ -299,6 +294,9 @@ templates:
     seen_movies: strict
     proper_movies: yes
     movie_queue: accept
+    content_size:
+      min: 700
+      max: 10000
     set:
       content_filename: '{{ imdb_name | pathscrub }} ({{ imdb_year }}){% if quality %} - {{ quality }}{% endif %}'
       label: movies
@@ -310,3 +308,20 @@ templates:
     archive:
       - torrent
       - movies
+  magazine:
+    set:
+      label: magazine
+      movedone: /srv/media/Magazines/
+    regexp:
+      accept:
+        - ^Wired UK
+        - ^Linux Voice
+        - ^Linux User & Developer
+        - ^Edge
+        - ^GamesTM
+        - ^Retro Gamer
+    content_filter:
+      require:
+        - '*.pdf'
+        - '*.epub'
+        - '*.cbr'

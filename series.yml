@@ -31,6 +31,14 @@ series:
         begin: S04E01
         set:
           tvdb_id: 261277
+    - Barely Legal Drivers:
+        begin: S02E01
+        set:
+          tvdb_id: 268355
+    - BattleBots (2015):
+        begin: S02E01
+        set:
+          tvdb_id: 294206
     - Better Call Saul:
         begin: S02E01
         set:
@@ -45,6 +53,15 @@ series:
         begin: S10E19
         set:
           tvdb_id: 75682
+    - Bordertown (2016):
+        begin: S01E01
+        set:
+          tvdb_id: 275120
+    - Broen:
+        alternate_name: The Bridge (2011)
+        begin: S03E01
+        set:
+          tvdb_id: 252019
     - Borgen:
         begin: S04E01
         set:
@@ -121,6 +138,11 @@ series:
         begin: S05E01
         set:
           tvdb_id: 247897
+    - Hunted (2015):
+        begin: S01E01
+        exact: yes
+        set:
+          tvdb_id: 299955
     - Ice Road Truckers:
         begin: S09E01
         set:
@@ -277,9 +299,6 @@ series:
         begin: S02E05
         set:
           tvdb_id: 270633
-    - University Challenge:
-        set:
-          tvdb_id: 72746
     - We Bare Bears:
         set:
           tvdb_id: 297271
@@ -308,3 +327,7 @@ series:
         begin: S06E03
         set:
           tvdb_id: 266449
+    - University Challenge:
+        begin: S45E01
+        set:
+          tvdb_id: 72746

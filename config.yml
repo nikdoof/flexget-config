@@ -242,6 +242,7 @@ templates:
     plugin_priority:
       piratebay: 140
     retry_failed: true
+    pathscrub: windows
   notify:
     pushbullet:
       apikey:
@@ -298,9 +299,9 @@ templates:
       min: 700
       max: 10000
     set:
-      content_filename: '{{ imdb_name | pathscrub }} ({{ imdb_year }}){% if quality %} - {{ quality }}{% endif %}'
+      content_filename: '{{ imdb_name | pathscrub | trim }} ({{ imdb_year }}){% if quality %} - {{ quality }}{% endif %}'
       label: movies
-      movedone: /srv/movie_archive/{{ imdb_name }} ({{ imdb_year}})
+      movedone: /srv/movie_archive/{{ imdb_name | pathscrub | trim }} ({{ imdb_year}})
     regexp:
       reject:
         - 3d
